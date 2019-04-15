@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/windows/servercore:1809 as win10sdk
+FROM mcr.microsoft.com/windows/servercore as win10sdk
 
 SHELL ["powershell", "-Command", "$ErrorActionPreference = 'Stop'; $ProgressPreference = 'SilentlyContinue';"]
 ADD http://download.microsoft.com/download/6/3/B/63BADCE0-F2E6-44BD-B2F9-60F5F073038E/standalonesdk/SDKSETUP.EXE C:/sdksetup.exe
@@ -39,7 +39,7 @@ RUN $win10sdkBinPath = ${env:ProgramFiles(x86)}+'\Windows Kits\10\bin\x64'; \
     } else { Throw 'Installation failed!  See logs under c:\sdksetup\' };
 
 
-FROM guramrit/node-windows:1809
+FROM stefanscherer/node-windows
 
 COPY --from=win10sdk ["C:\\\\Program Files (x86)\\\\Windows Kits\\\\10\\\\bin\\\\x64", "C:/kit"]
 
